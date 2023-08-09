@@ -55,7 +55,7 @@ void sort(int* Arr, int start, int end)
 	int leftCount = mid - start+1;
 	int rightCount = end - mid;
 
-	/* Если диапазон состоит из одного элемента, он уже отсортирован */
+	/* Р•СЃР»Рё РґРёР°РїР°Р·РѕРЅ СЃРѕСЃС‚РѕРёС‚ РёР· РѕРґРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°, РѕРЅ СѓР¶Рµ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ */
 	if (end == start) 
 	{
 		return;
@@ -196,7 +196,7 @@ int main(int* argc, char** argv)
 		cout << endl;
 		for (i = 1; i < comm_sz; i++)
 		{
-			// 0 отправляет 1, 2, 3, 4, 5, 6
+			// 0 РѕС‚РїСЂР°РІР»СЏРµС‚ 1, 2, 3, 4, 5, 6
 			MPI_Send(&local_n, 1, MPI_INT, i, 0, comm1);
 			
 		}
@@ -205,7 +205,7 @@ int main(int* argc, char** argv)
 	
 	else
 	{
-		//1, 2, 3, 4, 5, 6 принимают от 0
+		//1, 2, 3, 4, 5, 6 РїСЂРёРЅРёРјР°СЋС‚ РѕС‚ 0
 		MPI_Recv(&local_n, 1, MPI_INT, 0, 0, comm1, &status);
 		local_data = (int*)malloc(local_n * sizeof(int));
 
@@ -215,7 +215,7 @@ int main(int* argc, char** argv)
 		
 		if (my_rank == 1)
 		{
-			//1 принимает от 2
+			//1 РїСЂРёРЅРёРјР°РµС‚ РѕС‚ 2
 			MPI_Bcast(&q, 1, MPI_INT, 1, comm3);
 			otherArr = (int*)malloc(q * sizeof(int));
 			MPI_Scatter(local_data, local_n, MPI_INT, otherArr, q, MPI_INT, 1, comm3);
@@ -224,7 +224,7 @@ int main(int* argc, char** argv)
 
 
 
-			//1 принимает от 3
+			//1 РїСЂРёРЅРёРјР°РµС‚ РѕС‚ 3
 			MPI_Bcast(&q, 1, MPI_INT, 1, comm6);
 			otherArr = (int*)malloc(q * sizeof(int));
 			MPI_Scatter(local_data, local_n, MPI_INT, otherArr, q, MPI_INT, 1, comm6);
@@ -232,14 +232,14 @@ int main(int* argc, char** argv)
 			local_n = local_n + q;
 
 
-			//1 принимает от 5
+			//1 РїСЂРёРЅРёРјР°РµС‚ РѕС‚ 5
 			MPI_Bcast(&q, 1, MPI_INT, 1, comm7);
 			otherArr = (int*)malloc(q * sizeof(int));
 			MPI_Scatter(local_data, local_n, MPI_INT, otherArr, q, MPI_INT, 1, comm7);
 			local_data = merge(local_data, local_n, otherArr, q);
 			local_n = local_n + q;
 
-			//1 отправляет 0
+			//1 РѕС‚РїСЂР°РІР»СЏРµС‚ 0
 			MPI_Send(&local_n, 1, MPI_INT, 0, 0, comm8);
 			MPI_Send(local_data, local_n, MPI_INT, 0, 0, comm8);
 		}
@@ -248,7 +248,7 @@ int main(int* argc, char** argv)
 
 		if (my_rank == 2)
 		{
-			//2 отправляет 1
+			//2 РѕС‚РїСЂР°РІР»СЏРµС‚ 1
 			MPI_Bcast(&local_n, 1, MPI_INT, 1, comm3);
 			otherArr = (int*)malloc(local_n * sizeof(int));
 			MPI_Scatter(local_data, local_n, MPI_INT, otherArr, local_n, MPI_INT, 1, comm3);
@@ -259,14 +259,14 @@ int main(int* argc, char** argv)
 		if (my_rank == 3)
 		{
 
-			// 3 принимает от 4
+			// 3 РїСЂРёРЅРёРјР°РµС‚ РѕС‚ 4
 			MPI_Bcast(&q, 1, MPI_INT, 1, comm4);
 			otherArr = (int*)malloc(q * sizeof(int));
 			MPI_Scatter(local_data, local_n, MPI_INT, otherArr, q, MPI_INT, 1, comm4);
 			local_data = merge(local_data, local_n, otherArr, q);
 			local_n = local_n + q;
 
-			//3 отправляет 1
+			//3 РѕС‚РїСЂР°РІР»СЏРµС‚ 1
 			MPI_Bcast(&local_n, 1, MPI_INT, 1, comm6);
 			otherArr = (int*)malloc(local_n * sizeof(int));
 			MPI_Scatter(local_data, local_n, MPI_INT, otherArr, local_n, MPI_INT, 1, comm6);
@@ -278,7 +278,7 @@ int main(int* argc, char** argv)
 
 		if (my_rank == 4)
 		{
-			//4 отправляет 3
+			//4 РѕС‚РїСЂР°РІР»СЏРµС‚ 3
 			MPI_Bcast(&local_n, 1, MPI_INT, 1, comm4);
 			otherArr = (int*)malloc(local_n * sizeof(int));
 			MPI_Scatter(local_data, local_n, MPI_INT, otherArr, local_n, MPI_INT, 1, comm4);
@@ -288,14 +288,14 @@ int main(int* argc, char** argv)
 
 		if (my_rank == 5)
 		{
-			//5 принимает от 6
+			//5 РїСЂРёРЅРёРјР°РµС‚ РѕС‚ 6
 			MPI_Bcast(&q, 1, MPI_INT, 1, comm5);
 			otherArr = (int*)malloc(q * sizeof(int));
 			MPI_Scatter(local_data, local_n, MPI_INT, otherArr, q, MPI_INT, 1, comm5);
 			local_data = merge(local_data, local_n, otherArr, q);
 			local_n = local_n + q;
 
-			//5 отправляет 1
+			//5 РѕС‚РїСЂР°РІР»СЏРµС‚ 1
 			MPI_Bcast(&local_n, 1, MPI_INT, 1, comm7);
 			otherArr = (int*)malloc(local_n * sizeof(int));
 			MPI_Scatter(local_data, local_n, MPI_INT, otherArr, local_n, MPI_INT, 1, comm7);
@@ -305,7 +305,7 @@ int main(int* argc, char** argv)
 
 		if (my_rank == 6)
 		{
-			//6 отправляет 5
+			//6 РѕС‚РїСЂР°РІР»СЏРµС‚ 5
 			MPI_Bcast(&local_n, 1, MPI_INT, 1, comm5);
 			otherArr = (int*)malloc(local_n * sizeof(int));
 			MPI_Scatter(local_data, local_n, MPI_INT, otherArr, local_n, MPI_INT, 1, comm5);
@@ -320,7 +320,7 @@ int main(int* argc, char** argv)
 	if (my_rank == 0)
 	{
 
-		//0 принимает от 1 результат и выводит
+		//0 РїСЂРёРЅРёРјР°РµС‚ РѕС‚ 1 СЂРµР·СѓР»СЊС‚Р°С‚ Рё РІС‹РІРѕРґРёС‚
 		MPI_Recv(&q, 1, MPI_INT, 1, 0, comm8, &status);
 		MPI_Recv(data, q, MPI_INT, 1, 0, comm8, &status);
 		stop = clock();
